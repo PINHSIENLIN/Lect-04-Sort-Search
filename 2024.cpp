@@ -30,21 +30,62 @@ int main(){
     {
         cin >> arr[i];
     }
+   
+    // Input method
+    int num;
+    cin >> num;
 
-    // Bubble Sort
-    for (int j = N; j > 1; j--){
-        // Only do N-1 swap
-        for (int i = 0; i < N - 1; i++)
-        {
-            if (arr[i] > arr[i+1]){
-                swap(arr[i], arr[i+1]);
+   if (num == 1){
+        // Bubble Sort
+        for (int j = N; j > 1; j--){
+            // Only do N-1 swap
+            for (int i = 0; i < N - 1; i++)
+            {
+                if (arr[i] > arr[i+1]){
+                    swap(arr[i], arr[i+1]);
+                }
             }
+            // Input the workflow step by step
+            printArray(arr, N);
         }
-        // Input the workflow step by step
+   }
+   else if (num == 2) {
+        // Selection Sort
+        for (int i = 0; i < N - 1; i++) {
+            // take turns as min_index default is 0
+            int min_index = i;
+            for (int j = i + 1; j < N; j++)
+            {
+                if (arr[j] < arr[min_index]){
+                    min_index = j;
+                }
+            }
+        swap(arr[i], arr[min_index]);
+
         printArray(arr, N);
-    }
-    
-    // printArray(arr, N);
+        }
+   }
+   else if (num == 3) {
+        // Insertion Sort
+        for (int i = 1; i < N; i++)
+        {
+            int key = arr[i];
+            // Index of the previous element
+            int j = i - 1;
+            while (key < arr[j] && j >= 0)
+            {
+                // Move elements of arr[0..i-1] that are greater than key to one position ahead of their current position
+                arr[j + 1] = arr[j];
+                j = j - 1;
+            }
+            
+            // Place the current element (key) at its correct position in the sorted sequence
+            arr[j + 1] = key;
+
+            printArray(arr, N);
+        }
+   }
+    printArray(arr, N);
     
     return 0;
 }
