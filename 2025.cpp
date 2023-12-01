@@ -7,23 +7,51 @@
 
 #include <iostream>
 using namespace std;
-#define N 6
-void insertionSort(int arr[], int n){
+#define N 10000
 
-    for (int i = 1; i < n; i++)
-        {
-        int key = arr[i];
-        // Index of the previous element
-        int j = i - 1;
-        while (key < arr[j] && j >= 0)
-        {
-         // Move elements of arr[0..i-1] that are greater than key to one position ahead of their current position
-        arr[j + 1] = arr[j];
-        j = j - 1;
+// void insertionSort(int arr[], int n){
+
+//     for (int i = 1; i < n; i++)
+//         {
+//         int key = arr[i];
+//         // Index of the previous element
+//         int j = i - 1;
+//         while (key < arr[j] && j >= 0)
+//         {
+//          // Move elements of arr[0..i-1] that are greater than key to one position ahead of their current position
+//         arr[j + 1] = arr[j];
+//         j = j - 1;
+//         }
+//         // Place the current element (key) at its correct position in the sorted sequence
+//         arr[j + 1] = key;
+//         }
+// }
+
+int linearSearch(int arr[], int n, int x){
+     for (int i = 0; i < n; i++) {
+        if (arr[i] == x) {
+            return i;
         }
-        // Place the current element (key) at its correct position in the sorted sequence
-        arr[j + 1] = key;
+     }
+     return -1;
+}
+
+int binarySearch(int arr[], int n, int x){
+    int low = 0, high = n - 1;
+
+    while (low <= high) {
+        int mid = (low + high) / 2;
+        if (arr[mid] == x) {
+            return mid;
         }
+        else if (arr[mid] < x) {
+            low = mid + 1;
+        } 
+        else {
+            high = mid - 1;
+        }
+     }
+    return -1;
 }
 
 void printArray(int arr[], int size) {
@@ -35,34 +63,80 @@ void printArray(int arr[], int size) {
 
 int main(){
 
-    int choice = 0;
+    int choice;
     
     // Input array
     int arr[N];
     // size of array
     int n = 0;
-    
+
     while (true) {
         cin >> choice;
     // choice = 1, please enter data
         if (choice == 1) {
-            // Input data
-            if (n == 0){
-                
+            int data;
+            cin >> data;
+            if (n == 0) {
+                arr[0] = data;
+            } else {
+              // Previous index
+              int i = n - 1;
+               while (i >= 0 && arr[i] > data) {
+                arr[i + 1] = arr[i];
+                i--;
+              } 
+              arr[i + 1] = data;
             }
-            // size of input array  
-            // sizeof operator returns the size of of type in bytes, int type is 4 bytes
-            int n =  sizeof(arr) / sizeof(arr[0]);
-            // Call the insertionSort function
-            insertionSort(arr,n);
-        } 
+            n++;
+        }       
         // Linear Search
         else if (choice == 2) {
+            int value;
+            cin >> value;
+            int index = linearSearch(arr,n,value);
+            for (int i = 0; i <= index; i++)
+            {
+                if (arr[index] == value){
+                    cout << i << ": " << arr[i] << endl;
+                  } 
+                else
+                 break;
+            }
+            
+            if (arr[index] == value) {
+                cout << "found " << arr[index] << endl;
+            } else 
+                cout << "not found" << endl;
 
         } 
         // Binary Search
         else if (choice == 3) {
+            int value;
+            cin >> value;
+            int index = binarySearch(arr,n,value);
+            // Process
+            int low = 0, high = n - 1;
 
+                while (low <= high) {
+                    int mid = (low + high) / 2;
+                    if (arr[mid] == value) {
+                        cout << mid << ": " << arr[mid] << endl;
+                        break;
+                    }
+                    // else if (arr[mid] < value) {
+                    //     low = mid + 1;
+                    //     cout << mid << ": " << arr[mid] << endl;
+                    // } 
+                    // else {
+                    //     high = mid - 1;
+                    //     cout << mid << ": " << arr[mid] << endl;
+                    // }
+                }
+
+            if (arr[index] == value) {
+                cout << "found " << arr[index] << endl;
+            } else 
+                cout << "not found" << endl;
         } 
         // print the sorted array
         else if (choice == 4) {
