@@ -6,6 +6,7 @@
 // (5) leave
 
 #include <iostream>
+#include <cmath>
 using namespace std;
 #define N 10000
 
@@ -40,7 +41,7 @@ int binarySearch(int arr[], int n, int x){
     int low = 0, high = n - 1;
 
     while (low <= high) {
-        int mid = (low + high) / 2;
+        int mid = round(double(low + high) / 2);
         if (arr[mid] == x) {
             return mid;
         }
@@ -116,21 +117,22 @@ int main(){
             int index = binarySearch(arr,n,value);
             // Process
             int low = 0, high = n - 1;
-
+        
                 while (low <= high) {
-                    int mid = (low + high) / 2;
+                    int mid = round(double(low + high) / 2);
                     if (arr[mid] == value) {
                         cout << mid << ": " << arr[mid] << endl;
                         break;
                     }
-                    // else if (arr[mid] < value) {
-                    //     low = mid + 1;
-                    //     cout << mid << ": " << arr[mid] << endl;
-                    // } 
-                    // else {
-                    //     high = mid - 1;
-                    //     cout << mid << ": " << arr[mid] << endl;
-                    // }
+                    else if (arr[mid] < value) {
+                        cout << mid << ": " << arr[mid] << endl;
+                        low = mid + 1;
+                        
+                    } 
+                    else {
+                        cout << mid << ": " << arr[mid] << endl;
+                        high = mid - 1;
+                    }
                 }
 
             if (arr[index] == value) {
